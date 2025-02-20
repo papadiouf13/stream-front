@@ -1,0 +1,98 @@
+@import "tailwindcss";
+#root {
+    width: 90%;
+    margin: 0 auto;
+    /* padding: 2rem; */
+    text-align: center;
+}
+
+header {
+    position: fixed; /* Fix the header at the top */
+    left: 0;
+    right: 0;
+    z-index: 50; /* Ensure it stays above other content */
+}
+
+  
+  .logo {
+    height: 3em; /* Changed from 6em to 4em */
+    padding: 0.5em;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+  .logo.react:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa);
+  }
+  
+  .card {
+    padding: 2em;
+  }
+  
+  .read-the-docs {
+    color: #888;
+  }
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    height: 380px; /* Hauteur fixe pour garantir l'uniformité */
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Partie supérieure : Image avec hauteur fixe */
+  .service-card-header {
+    height: 150px; /* Assurer que toutes les images ont la même hauteur */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  /* Partie inférieure : Texte qui prend tout l’espace restant */
+  .service-card-body {
+    flex-grow: 1; /* S'adapte à l’espace restant */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+  }
+  
+  .service-card-body h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .service-card-body p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.4;
+    flex-grow: 1; /* S'assure que le texte prend l'espace disponible */
+  }
+  
+  .client-logo {
+    width: 120px; /* Taille fixe des logos */
+    height: 80px; /* Hauteur fixe */
+    object-fit: contain; /* Permet de conserver le ratio des logos */
+    filter: grayscale(100%); /* Applique le gris par défaut */
+    opacity: 0.8;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+  }
+  
+  .client-logo:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
