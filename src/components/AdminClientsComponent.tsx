@@ -153,7 +153,7 @@ const AdminClientsSection: React.FC = () => {
 
       <button
         onClick={handleSave}
-        className="mt-6 bg-green-600 text-white px-6 py-2 rounded"
+        className="mt-6 bg-blue-600 text-white px-6 py-2 rounded"
       >
         Enregistrer les changements
       </button>

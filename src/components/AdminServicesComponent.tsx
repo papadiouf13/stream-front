@@ -52,6 +52,7 @@ const AdminServicesSection: React.FC = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
+          console.log("Suppression de l'ID :", services[index].id);
           await api.delete(`/admin/delete-service/${services[index].id}`);
           setServices(services.filter((_, i) => i !== index));
           Swal.fire('Supprimé !', 'Le service a été supprimé.', 'success');
@@ -63,30 +64,25 @@ const AdminServicesSection: React.FC = () => {
   };
 
   const handleSaveChanges = async () => {
-    if (services.length > 5) {
-      Swal.fire('Erreur', 'Vous ne pouvez pas avoir plus de 5 services.', 'error');
-      return;
-    }
-  
     const formData = new FormData();
-  
+
     services.forEach((service, index) => {
       if (!service.id) {
         Swal.fire('Erreur', `Le service ${index + 1} n'a pas d'ID.`, 'error');
         return;
       }
-  
+
       formData.append(`services[${index}][id]`, service.id);
       formData.append(`services[${index}][title]`, service.title);
       formData.append(`services[${index}][description]`, service.description);
-  
+
       if (typeof service.image === 'object') {
         formData.append(`images[${service.id}]`, service.image);
       } else {
         formData.append(`services[${index}][image]`, service.image);
       }
     });
-  
+
     try {
       await api.patch('/admin/update-services', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -96,76 +92,64 @@ const AdminServicesSection: React.FC = () => {
       Swal.fire('Erreur', 'Une erreur est survenue lors de la mise à jour.', 'error');
     }
   };
-  
+
   return (
     <div className="mt-24">
-    <h2 className="text-2xl font-bold mb-4">Modifier les services</h2>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {services.map((service, index) => (
-        <div key={service.id} className="relative border p-4 rounded shadow">
-          <button
-            onClick={() => removeService(index)}
-            className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
-          >
-            <FontAwesomeIcon icon={faTimesCircle} className="text-xl" />
-          </button>
-  
-          <label className="block mb-2 font-semibold">Titre</label>
-          <input
-            type="text"
-            value={service.title}
-            onChange={(e) => handleServiceChange(index, 'title', e.target.value)}
-            className="block border p-2 mb-2 w-full"
-          />
-  
-          <label className="block mb-2 font-semibold">Description</label>
-          <textarea
-            value={service.description}
-            onChange={(e) => handleServiceChange(index, 'description', e.target.value)}
-            className="block border p-2 mb-2 w-full"
-          ></textarea>
-  
-          <label className="block mb-2 font-semibold">Image</label>
-          <input
-            type="file"
-            onChange={(e) => handleImageChange(index, e)}
-            className="block border p-2 mb-2 w-full"
-          />
-  
-          <img
-            src={
-              typeof service.image === 'string'
-                ? service.image
-                : service.image instanceof File
-                ? URL.createObjectURL(service.image)
-                : ''
-            }
-            alt={service.title}
-            className="w-32 h-32 object-cover mb-4"
-          />
-        </div>
-      ))}
-    </div>
-  
-    {services.length < 5 && (
+      <h2 className="text-2xl font-bold mb-4">Modifier les services</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {services.map((service, index) => (
+          <div key={service.id} className="relative border p-4 rounded shadow">
+            <button
+              onClick={() => removeService(index)}
+              className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+            >
+              <FontAwesomeIcon icon={faTimesCircle} className="text-xl" />
+            </button>
+
+            <label className="block mb-2 font-semibold">Titre</label>
+            <input
+              type="text"
+              value={service.title}
+              onChange={(e) => handleServiceChange(index, 'title', e.target.value)}
+              className="block border p-2 mb-2 w-full"
+            />
+
+            <label className="block mb-2 font-semibold">Description</label>
+            <textarea
+              value={service.description}
+              onChange={(e) => handleServiceChange(index, 'description', e.target.value)}
+              className="block border p-2 mb-2 w-full"
+            ></textarea>
+
+            <label className="block mb-2 font-semibold">Image</label>
+            <input
+              type="file"
+              onChange={(e) => handleImageChange(index, e)}
+              className="block border p-2 mb-2 w-full"
+            />
+
+            <img
+              src={
+                typeof service.image === 'string'
+                  ? service.image
+                  : service.image instanceof File
+                  ? URL.createObjectURL(service.image)
+                  : ''
+              }
+              alt={service.title}
+              className="w-32 h-32 object-cover mb-4"
+            />
+          </div>
+        ))}
+      </div>
+
       <button
-        onClick={() =>
-          setServices([...services, { id: '', title: '', description: '', image: '' }])
-        }
-        className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+        onClick={handleSaveChanges}
+        className="bg-blue-600 text-white px-4 py-2 rounded mt-4"
       >
-        Ajouter un service
+        Enregistrer les changements
       </button>
-    )}
-  
-    <button
-      onClick={handleSaveChanges}
-      className="bg-green-600 text-white px-4 py-2 rounded mt-4"
-    >
-      Enregistrer les changements
-    </button>
-  </div>
-  
+    </div>
   );
 };
 

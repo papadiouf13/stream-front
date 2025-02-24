@@ -126,7 +126,7 @@ const AdminHeroSection: React.FC = () => {
           ))}
         </div>
       </div>
-      <button onClick={handleSave} className="bg-green-600 text-white px-4 py-2 mt-4">
+      <button onClick={handleSave} className="bg-blue-600 text-white px-4 py-2 mt-4">
         Enregistrer
       </button>
     </div>
